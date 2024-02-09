@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [[ $3 == '' ]]; then
-    echo "dyld_symbol_extractor.sh [CACHE_PATH] [OUTPUT_DIR] [platform]"
+if [[ $4 == '' ]]; then
+    echo "dyld_symbol_extractor.sh [CACHE_PATH] [OUTPUT_DIR] [platform] [arch]"
     echo "macOS cache: /System/Volumes/Preboot/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e"
     echo "macosx ios watchos tvos bridgeos iosmac driverkit"
     exit 1
@@ -47,5 +47,5 @@ if [[ ! -f "${TBD}" ]]; then
 fi;
 
 ${DSC_EXTRACTOR} "${1}" "${2}"
-${TBD} -p --ignore-warnings --ignore-clients --ignore-undefineds --allow-private-objc-symbols --ignore-missing-exports --replace-platform "${3}" --replace-archs arm64e -v v3 -r all "${2}" -o --no-overwrite --preserve-subdirs --replace-path-extension "${2}"
+${TBD} -p --ignore-warnings --ignore-clients --ignore-undefineds --allow-private-objc-symbols --ignore-missing-exports --replace-platform "${3}" --replace-archs "${4}" -v v3 -r all "${2}" -o --no-overwrite --preserve-subdirs --replace-path-extension "${2}"
 rm -rf "${WORK_DIR}"
